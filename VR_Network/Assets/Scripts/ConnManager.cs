@@ -54,5 +54,6 @@ public class ConnManager : MonoBehaviourPunCallbacks
         //반경 2m 이내에 Player 프리팹을 생성
         Vector2 originPos = Random.insideUnitCircle * 2.0f;
         PhotonNetwork.Instantiate("Player", new Vector3(originPos.x, 0, originPos.y), Quaternion.identity);
+        //static GameObject Instantiate(string prefabName, Vector3 position, Quaternion rotation);
     }
 }
