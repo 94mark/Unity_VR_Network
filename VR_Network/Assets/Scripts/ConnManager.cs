@@ -29,4 +29,9 @@ public class ConnManager : MonoBehaviourPunCallbacks
     {
         
     }
+
+    public override void OnConnectedToMaster()
+    {
+        PhotonNetwork.JoinLobby(TypedLobby.Default);
+    }
 }
