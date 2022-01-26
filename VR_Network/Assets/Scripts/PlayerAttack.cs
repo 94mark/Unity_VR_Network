@@ -2,14 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
 public class PlayerAttack : MonoBehaviourPun
 {
     public Animator anim;
+    public float maxHP = 10;
+    public float attackPower = 2;
+    public Slider hpSlider;
+    public BoxCollider weaponCol;
+
+    float curHP = 0;
 
     void Start()
     {
-        
+        //현재 체력을 최대 체력으로 채움
+        curHP = maxHP;
+        hpSlider.value = curHP / maxHP;
     }
     
     void Update()
