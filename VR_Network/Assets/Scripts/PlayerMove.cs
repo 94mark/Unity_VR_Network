@@ -55,9 +55,9 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
         }
         else
         {
-            //전체 오브젝트의 위치 값과 캐릭터의 회전 값을 서버에서 전달받은 값으로 동기화
-            transform.position = setPos;
-            myCharacter.rotation = setRot;
+            //전체 오브젝트의 위치 값과 캐릭터의 회전 값을 서버에서 전달받은 값으로 선형 보간해 동기화
+            transform.position = Vector3.Lerp(transform.position, setPos, Time.deltaTime * 20.0f);
+            myCharacter.rotation = Quaternion.Lerp(myCharacter.rotation, setRot, Time.deltaTime * 20.0f);
 
             //서버에서 전달받은 값으로 애니메이터 파라미터 값을 동기화
             anim.SetFloat("Speed", dir_speed);
