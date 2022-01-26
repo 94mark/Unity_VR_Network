@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class PlayerMove : MonoBehaviourPun
+public class PlayerMove : MonoBehaviourPun, IPunObservable
 {
     public float moveSpeed = 3.0f;
     public float rotSpeed = 200.0f;
@@ -53,5 +53,11 @@ public class PlayerMove : MonoBehaviourPun
         float rotH = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, OVRInput.Controller.RTouch).x;
         //CameraRig 오브젝트를 회전시킨다
         cameraRig.transform.eulerAngles += new Vector3(0, rotH, 0) * rotSpeed * Time.deltaTime;
+    }
+
+    //데이터 동기화를 위한 데이터 전송 및 수신 기능
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+
     }
 }
