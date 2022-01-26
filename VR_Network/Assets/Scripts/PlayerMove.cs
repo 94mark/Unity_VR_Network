@@ -49,6 +49,9 @@ public class PlayerMove : MonoBehaviourPun
     //회전 기능
     void Rotate()
     {
-
+        //오른손의 방향 값에서 좌우 기울기를 누적시킨다
+        float rotH = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, OVRInput.Controller.RTouch).x;
+        //CameraRig 오브젝트를 회전시킨다
+        cameraRig.transform.eulerAngles += new Vector3(0, rotH, 0) * rotSpeed * Time.deltaTime;
     }
 }
