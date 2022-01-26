@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviourPun, IPunObservable
 {
@@ -10,6 +11,7 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
     public GameObject cameraRig;
     public Transform myCharacter;
     public Animator anim;
+    public Text nameText;
 
     //서버에서 받은 데이터를 저장할 변수
     Vector3 setPos;
@@ -20,6 +22,19 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
     {
         //사용자의 오브젝트일 때만 카메라 장치를 활성화
         cameraRig.SetActive(photonView.IsMine);
+
+        //각 접속자의 닉네임 출력
+        nameText.text = photonView.Owner.NickName;
+
+        //자신의 이름은 녹색, 다른 사람의 이름은 빨간색으로 출력
+        if(photonView.IsMine)
+        {
+            nameText.color = Color.green;
+        }
+        else
+        {
+            nameText.color = Color.red;
+        }
     }
 
     void Update()
