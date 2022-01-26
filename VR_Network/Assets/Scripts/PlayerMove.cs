@@ -11,6 +11,11 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
     public Transform myCharacter;
     public Animator anim;
 
+    //서버에서 받은 데이터를 저장할 변수
+    Vector3 setPos;
+    Quaternion setRot;
+    float dir_speed = 0;
+
     void Start()
     {
         
@@ -58,6 +63,19 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
     //데이터 동기화를 위한 데이터 전송 및 수신 기능
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-
+        //만일 데이터를 전송하는 상황이라면
+        if(stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+            stream.SendNext(myCharacter.rotation);
+            stream.SendNext(anim.GetFloat("Speed"));
+        }
+        //만일 데이터를 수신하는 상황이라면
+        else if(stream.IsReading)
+        {
+            setPos = (Vector3)stream.ReceiveNext();
+            setRot = (Quaternion)stream.ReceiveNext();
+            dir_speed = (float)stream.ReceiveNext();
+        }
     }
 }
