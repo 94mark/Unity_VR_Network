@@ -30,25 +30,37 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
     //이동 기능
     void Move()
     {
-        //왼손 썸스틱의 방향 값을 가져와 캐릭터의 이동 방향을 정한다
-        Vector2 stickPos = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, OVRInput.Controller.LTouch);
-        Vector3 dir = new Vector3(stickPos.x, 0, stickPos.y);
-        dir.Normalize();
-
-        //캐릭터의 이동 방향 벡터를 카메라가 바라보는 방향을 정면으로 하도록 변경
-        dir = cameraRig.transform.TransformDirection(dir);
-        transform.position += dir * moveSpeed * Time.deltaTime;
-
-        //만일, 왼손 썸스틱을 기울이면 그 방향으로 캐릭터를 회전시킨다
-        float magnitude = dir.magnitude;
-
-        if(magnitude > 0)
+        if(photonView.IsMine)
         {
-            myCharacter.rotation = Quaternion.LookRotation(dir);
-        }
+            //왼손 썸스틱의 방향 값을 가져와 캐릭터의 이동 방향을 정한다
+            Vector2 stickPos = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, OVRInput.Controller.LTouch);
+            Vector3 dir = new Vector3(stickPos.x, 0, stickPos.y);
+            dir.Normalize();
 
-        //애니메이터 블렌드 트리 변수에 벡터의 크기 전달
-        anim.SetFloat("Speed", magnitude);
+            //캐릭터의 이동 방향 벡터를 카메라가 바라보는 방향을 정면으로 하도록 변경
+            dir = cameraRig.transform.TransformDirection(dir);
+            transform.position += dir * moveSpeed * Time.deltaTime;
+
+            //만일, 왼손 썸스틱을 기울이면 그 방향으로 캐릭터를 회전시킨다
+            float magnitude = dir.magnitude;
+
+            if (magnitude > 0)
+            {
+                myCharacter.rotation = Quaternion.LookRotation(dir);
+            }
+
+            //애니메이터 블렌드 트리 변수에 벡터의 크기 전달
+            anim.SetFloat("Speed", magnitude);
+        }
+        else
+        {
+            //전체 오브젝트의 위치 값과 캐릭터의 회전 값을 서버에서 전달받은 값으로 동기화
+            transform.position = setPos;
+            myCharacter.roatation = setRot;
+
+            //서버에서 전달받은 값으로 애니메이터 파라미터 값을 동기화
+            anim.SetFloat("Speed", dir_speed);
+        }
     }
 
     //회전 기능
