@@ -34,4 +34,16 @@ public class ConnManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
+
+    public override void OnJoinedLobby()
+    {
+        Debug.Log("로비 접속 완료!");
+        RoomOptions ro = new RoomOptions()
+        {
+            IsVisible = true,
+            IsOpen = true,
+            MaxPlayers = 8
+        };
+        PhotonNetwork.JoinOrCreateRoom("NetTest", ro, TypedLobby.Default);
+    }
 }
