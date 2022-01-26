@@ -18,7 +18,8 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 
     void Start()
     {
-        
+        //사용자의 오브젝트일 때만 카메라 장치를 활성화
+        cameraRig.SetActive(photonView.IsMine);
     }
 
     void Update()
@@ -56,7 +57,7 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
         {
             //전체 오브젝트의 위치 값과 캐릭터의 회전 값을 서버에서 전달받은 값으로 동기화
             transform.position = setPos;
-            myCharacter.roatation = setRot;
+            myCharacter.rotation = setRot;
 
             //서버에서 전달받은 값으로 애니메이터 파라미터 값을 동기화
             anim.SetFloat("Speed", dir_speed);
@@ -66,10 +67,13 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
     //회전 기능
     void Rotate()
     {
-        //오른손의 방향 값에서 좌우 기울기를 누적시킨다
-        float rotH = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, OVRInput.Controller.RTouch).x;
-        //CameraRig 오브젝트를 회전시킨다
-        cameraRig.transform.eulerAngles += new Vector3(0, rotH, 0) * rotSpeed * Time.deltaTime;
+        if(photonView.IsMine)
+        {
+            //오른손의 방향 값에서 좌우 기울기를 누적시킨다
+            float rotH = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, OVRInput.Controller.RTouch).x;
+            //CameraRig 오브젝트를 회전시킨다
+            cameraRig.transform.eulerAngles += new Vector3(0, rotH, 0) * rotSpeed * Time.deltaTime;
+        }
     }
 
     //데이터 동기화를 위한 데이터 전송 및 수신 기능
