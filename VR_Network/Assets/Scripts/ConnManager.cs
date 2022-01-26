@@ -46,4 +46,13 @@ public class ConnManager : MonoBehaviourPunCallbacks
         };
         PhotonNetwork.JoinOrCreateRoom("NetTest", ro, TypedLobby.Default);
     }
+
+    public override void OnJoinedRoom()
+    {
+        Debug.Log("룸 입장!");
+
+        //반경 2m 이내에 Player 프리팹을 생성
+        Vector2 originPos = Random.insideUnitCircle * 2.0f;
+        PhotonNetwork.Instantiate("Player", new Vector3(originPos.x, 0, originPos.y), Quaternion.identity);
+    }
 }
