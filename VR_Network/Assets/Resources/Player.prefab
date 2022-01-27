@@ -119,6 +119,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 8355772132273065913}
+  maxHP: 10
+  attackPower: 2
+  hpSlider: {fileID: 7502666244095727387}
+  weaponCol: {fileID: 446836163912624571}
 --- !u!136 &5668524598584051119
 CapsuleCollider:
   m_ObjectHideFlags: 0
