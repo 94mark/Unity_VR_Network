@@ -50,4 +50,15 @@ public class PlayerAttack : MonoBehaviourPun
         //hp슬라이더에 현재 체력 상태를 출력한다
         hpSlider.value = curHP / maxHP;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //만일 자신의 캐릭터이면서 검에 닿은 대상의 이름이 Player라는 글자를 포함하고 있다면
+        if(photonView.IsMine && other.gameObject.name.Contains("Player"))
+        {
+            //무기에 닿은 대상의 포톤뷰에서 데미지 처리 함수를 RPC로 호출한다
+            PhotonView pv = other.GetComponent<PhotonView>();
+            pv.RPC("Damage", RpcTarget.AllBuffered, attackPower);
+        }
+    }
 }
