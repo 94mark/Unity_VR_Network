@@ -16,7 +16,7 @@ MonoBehaviour:
     AppIdRealtime: d5c8b2bb-e642-437e-b93f-21161904eaf4
     AppIdFusion: 
     AppIdChat: 
-    AppIdVoice: 
+    AppIdVoice: e1dec7ba-8ade-4c4c-85df-a7addb46c4d8
     AppVersion: 
     UseNameServer: 1
     FixedRegion: kr
@@ -41,6 +41,9 @@ MonoBehaviour:
   - RespawnSpaceship
   - AttackAnimation
   - Damaged
+  - CantHearYou
+  - ChangeColour
+  - HeresWhy
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
+  ShowSettings: 1
   DevRegionSetOnce: 0
