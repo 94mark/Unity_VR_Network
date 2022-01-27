@@ -59,6 +59,9 @@ public class PlayerAttack : MonoBehaviourPun
             //무기에 닿은 대상의 포톤뷰에서 데미지 처리 함수를 RPC로 호출한다
             PhotonView pv = other.GetComponent<PhotonView>();
             pv.RPC("Damage", RpcTarget.AllBuffered, attackPower);
+
+            //무기의 콜라이더를 비활성화
+            weaponCol.enabled = false;
         }
     }
 }
