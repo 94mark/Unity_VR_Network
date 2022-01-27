@@ -39,4 +39,15 @@ public class PlayerAttack : MonoBehaviourPun
     {
         anim.SetTrigger("Attack");
     }
+
+    //데미지 감소 처리 함수 + RPC 애트리뷰트
+    [PunRPC]
+    public void Damaged(float pow)
+    {
+        //0을 하한으로 해 현재 체력에서 공격력만큼을 감소시킨다
+        curHP = Mathf.Max(0, curHP - pow);
+
+        //hp슬라이더에 현재 체력 상태를 출력한다
+        hpSlider.value = curHP / maxHP;
+    }
 }
